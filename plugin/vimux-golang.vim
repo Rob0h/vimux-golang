@@ -30,11 +30,11 @@ function! GolangCwd()
 endfunction
 
 function! GolangTestCurrentPackage()
-  call VimuxRunCommand("cd " . GolangCwd() . " " . s:separator . " clear " . s:separator . " go test -v " . GolangCurrentPackage())
+  call VimuxRunCommand("go test -v " . GolangCurrentPackage() . " " . GolangCwd())
 endfunction
 
 function! GolangRun()
-  call VimuxRunCommand("cd " . GolangCwd() . " " . s:separator . " clear " . s:separator . " go run " . expand('%:t'))
+  call VimuxRunCommand("go run " . @%)
 endfunction
 
 function! GolangTestFocused()
@@ -46,7 +46,7 @@ function! GolangTestFocused()
     let test_name_raw = split(line, " ")[1]
     let test_name = split(test_name_raw, "(")[0]
 
-    call VimuxRunCommand("cd " . GolangCwd() . " " . s:separator . " clear " . s:separator . " go test " . GolangFocusedCommand(test_name) . " -v " . GolangCurrentPackage())
+    call VimuxRunCommand("go test " . GolangFocusedCommand(test_name) . " -v " . GolangCurrentPackage() . " " . GolangCwd())
   else
     echo "No test found"
   endif
